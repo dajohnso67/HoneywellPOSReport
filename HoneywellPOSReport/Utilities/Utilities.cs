@@ -1,10 +1,11 @@
 ﻿using LiteDB;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace HoneywellPOSReport
 {
-   
     public static class Utilities
     {
         /// <summary>
@@ -14,17 +15,9 @@ namespace HoneywellPOSReport
         /// <returns></returns>
         public static string CleanUpDescription(string desc)
         {
-            desc = desc.Replace("HONEYWELL-IND ", string.Empty);
-            string[] nums = desc.Split("-");
-
+            List<string> nums = desc.Replace("HONEYWELL-IND ", string.Empty).Split("-").ToList();
             desc = string.Empty;
-
-            foreach (var item in nums)
-            {
-
-                desc += $"{item.TrimStart()}-";
-            }
-
+            nums.ForEach(c => { desc += $"{c.TrimStart()}-"; });
             return desc.Split(" ")[0].TrimEnd('-');
         }
 
@@ -35,7 +28,8 @@ namespace HoneywellPOSReport
         /// <returns></returns>
         public static string GetAbbreviatedFromFullName(string fullname)
         {
-            string[] names = DateTimeFormatInfo.CurrentInfo.MonthNames;
+            List<string> names = DateTimeFormatInfo.CurrentInfo.MonthNames.ToList();
+
             foreach (var item in names)
             {
                 if (item == fullname)
