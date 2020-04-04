@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Destination_xlsx\**" />
+    <EmbeddedResource Remove="Destination_xlsx\**" />
+    <None Remove="Destination_xlsx\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.94.2" />
     <PackageReference Include="CsvHelper" Version="15.0.4" />
     <PackageReference Include="DocumentFormat.OpenXml" Version="2.10.1" />
@@ -16,8 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Destination_xlsx\" />
-    <Folder Include="Source_csv\" />
     <Folder Include="Data\" />
   </ItemGroup>
 
