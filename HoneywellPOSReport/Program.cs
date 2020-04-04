@@ -40,7 +40,7 @@ namespace HoneywellPOSReport
                 Console.WriteLine("File type must be CSV");
             }
 
-            string dest = $"{input}OldFiles\\";
+            string dest = $"{input}Archive\\";
 
             if (!Directory.Exists(dest)) {
                 Directory.CreateDirectory(dest);
