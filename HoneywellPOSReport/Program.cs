@@ -40,6 +40,20 @@ namespace HoneywellPOSReport
                 Console.WriteLine("File type must be CSV");
             }
 
+            string dest = $"{input}OldFiles\\";
+
+            if (!Directory.Exists(dest)) {
+                Directory.CreateDirectory(dest);
+            }
+
+            string movedFile = $"{dest}{file.Name}";
+
+            if (File.Exists(movedFile)) {
+                File.Delete(movedFile);
+            }
+
+            File.Move(file.FullName, movedFile);
+
             Console.ReadKey();
         }
 
@@ -95,7 +109,7 @@ namespace HoneywellPOSReport
             for (int i = 1; i < ws.Columns().ToArray().Length + 1; i++) 
             {
                 ws.Cell(1, i).Style.Fill.BackgroundColor = XLColor.PastelYellow;
-                ws.Cell(1, i).Style.Font.FontColor = XLColor.RichBlack;
+                ws.Cell(1, i).Style.Font.FontColor = XLColor.SmokyBlack;
                 ws.Cell(1, i).Style.Font.Bold = true;
             }
 
