@@ -36,5 +36,5 @@ msbuild.err
 msbuild.wrn
 
 # Visual Studio 2015
-.vs/
-.vs/HoneywellPOSReport/v16/.suo
+*.vs/
+*.vs/HoneywellPOSReport/v16/.suo
