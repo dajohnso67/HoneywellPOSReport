@@ -1,0 +1,254 @@
+  [
+    {
+      "CustomerName": "3V FASTENERS COMPANY INC",
+      "SIC": "3400"
+    },
+    {
+      "CustomerName": "ASC PROCESS SYSTEMS",
+      "SIC": "OEM"
+    },
+    {
+      "CustomerName": "ADWEST TECHNOLOGIES INC",
+      "SIC": "OEM"
+    },
+    {
+      "CustomerName": "ALLIANCE CORPORATION",
+      "SIC": "OEM"
+    },
+    {
+      "CustomerName": "ALUMINUM PRECISION PRODUCTS",
+      "SIC": "3400"
+    },
+    {
+      "CustomerName": "AM,ERICAN CREMATORY EQUIPMENT CO",
+      "SIC": "OEM"
+    },
+    {
+      "CustomerName": "ARCONIC FASTENING SYSTEMS",
+      "SIC": "3400"
+    },
+    {
+      "CustomerName": "AVIBANK MANUFACTURING CO",
+      "SIC": "3400"
+    },
+    {
+      "CustomerName": "BEMCO INC",
+      "SIC": "3900"
+    },
+    {
+      "CustomerName": "CALIFORNIA BOILER INC",
+      "SIC": "1700"
+    },
+    {
+      "CustomerName": "CARLTON FORGE WORKS",
+      "SIC": "3400"
+    },
+    {
+      "CustomerName": "CERTIFIED TEMPERATURE CALIBRATION",
+      "SIC": "3800"
+    },
+    {
+      "CustomerName": "CHEVRON U.S.A.",
+      "SIC": "2900"
+    },
+    {
+      "CustomerName": "CHROMALLOY",
+      "SIC": "3400"
+    },
+    {
+      "CustomerName": "COACHELLA VALLEY WATER DISTRICT",
+      "SIC": "4900"
+    },
+    {
+      "CustomerName": "CONSOLIDATED PRECISION PRODUCTS",
+      "SIC": "3400"
+    },
+    {
+      "CustomerName": "CONTROL CONCEPTS",
+      "SIC": "5000"
+    },
+    {
+      "CustomerName": "D K OVENS",
+      "SIC": "OEM"
+    },
+    {
+      "CustomerName": "DARLING INGREDIENTS INC",
+      "SIC": "2000"
+    },
+    {
+      "CustomerName": "J.C.FORD COMPANY",
+      "SIC": "OEM"
+    },
+    {
+      "CustomerName": "FORGED METALS",
+      "SIC": "3400"
+    },
+    {
+      "CustomerName": "HARBER FURNACE LLC",
+      "SIC": "3900"
+    },
+    {
+      "CustomerName": "HYDRAFLOW",
+      "SIC": "5000"
+    },
+    {
+      "CustomerName": "INDEPENDENT THERMAL SOLUTIONS INC",
+      "SIC": "5000"
+    },
+    {
+      "CustomerName": "INDUSTRIAL SPECIALTY PRODUCTS",
+      "SIC": "3400"
+    },
+    {
+      "CustomerName": "KIRKHILL INC",
+      "SIC": "3000"
+    },
+    {
+      "CustomerName": "KOBELCO COMPRESSORS AMERICA INC",
+      "SIC": "3900"
+    },
+    {
+      "CustomerName": "COUNTY OF LOS ANGELES SANITATION DISTRICT",
+      "SIC": "4900"
+    },
+    {
+      "CustomerName": "LEED ELECTRIC INC",
+      "SIC": "1700"
+    },
+    {
+      "CustomerName": "LEFIELL MANUFACTURING",
+      "SIC": "3400"
+    },
+    {
+      "CustomerName": "R.F.MACDONALD CO",
+      "SIC": "1700"
+    },
+    {
+      "CustomerName": "MAKO INDUSTRIES",
+      "SIC": "OEM"
+    },
+    {
+      "CustomerName": "MELCO STEEL INC",
+      "SIC": "OEM"
+    },
+    {
+      "CustomerName": "METAL COATERS OF CALIFORNIA INC",
+      "SIC": "3400"
+    },
+    {
+      "CustomerName": "NATIONAL GYPSUM",
+      "SIC": "3200"
+    },
+    {
+      "CustomerName": "NELSON ELECTRIC CO INC",
+      "SIC": "1700"
+    },
+    {
+      "CustomerName": "ONESOURCE DISTRIBUTORS",
+      "SIC": "5000"
+    },
+    {
+      "CustomerName": "OSCAR'S OVEN SERVICE AND REPAIR",
+      "SIC": "1700"
+    },
+    {
+      "CustomerName": "PACIFIC KILN & INSULATIONS CO",
+      "SIC": "OEM"
+    },
+    {
+      "CustomerName": "PHILLIPS 66",
+      "SIC": "2900"
+    },
+    {
+      "CustomerName": "PORTER BOILER",
+      "SIC": "1700"
+    },
+    {
+      "CustomerName": "PRESS FORGE CO",
+      "SIC": "3400"
+    },
+    {
+      "CustomerName": "PRIME WHEEL CORPORATION",
+      "SIC": "3900"
+    },
+    {
+      "CustomerName": "PROTECH THERMAL SERVICES",
+      "SIC": "3900"
+    },
+    {
+      "CustomerName": "PURE EFFECT INC",
+      "SIC": "5000"
+    },
+    {
+      "CustomerName": "QUALITY HEAT TREATING",
+      "SIC": "3400"
+    },
+    {
+      "CustomerName": "RALPH AUTOMATION INC",
+      "SIC": "OEM"
+    },
+    {
+      "CustomerName": "ROBERTSON COMPANY INC",
+      "SIC": "3800"
+    },
+    {
+      "CustomerName": "ROHR INC",
+      "SIC": "3900"
+    },
+    {
+      "CustomerName": "ROUND MOUNTAIN GOLD CORPORATION",
+      "SIC": "3300"
+    },
+    {
+      "CustomerName": "ROYAL INDUSTRIAL SOLUTIONS",
+      "SIC": "5000"
+    },
+    {
+      "CustomerName": "SAMUEL, SON & COMPANY USA, INC",
+      "SIC": "3400"
+    },
+    {
+      "CustomerName": "SAN JOAQUIN ELECTRIC INC",
+      "SIC": "1700"
+    },
+    {
+      "CustomerName": "SCHLOSSER FORGE CO",
+      "SIC": "3400"
+    },
+    {
+      "CustomerName": "SHIP AND SHORE  ENVIRONMENTAL INC",
+      "SIC": "OEM"
+    },
+    {
+      "CustomerName": "SMITHFIELD FOODS - VERNON",
+      "SIC": "2000"
+    },
+    {
+      "CustomerName": "SOUTH COAST WATER DISTRICT",
+      "SIC": "4900"
+    },
+    {
+      "CustomerName": "TESTEQUITY INC",
+      "SIC": "OEM"
+    },
+    {
+      "CustomerName": "THERMAL EQUIPMENT CORPORATION",
+      "SIC": "OEM"
+    },
+    {
+      "CustomerName": "TIMET",
+      "SIC": "3300"
+    },
+    {
+      "CustomerName": "TREE ISLANDS INDUSTRIES LLC",
+      "SIC": "3400"
+    },
+    {
+      "CustomerName": "TRUCKEE MEADOWS WATER AUTHORITY",
+      "SIC": "4900"
+    },
+    {
+      "CustomerName": "UNLIMITED CONTROLS/INSTRUMENTATION",
+      "SIC": "5000"
+    }
+  ]
