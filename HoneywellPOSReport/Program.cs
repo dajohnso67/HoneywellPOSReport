@@ -1,6 +1,7 @@
 ﻿using ClosedXML.Excel;
 using CsvHelper;
 using LiteDB;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,28 @@ using System.Linq;
 
 namespace HoneywellPOSReport
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        static string currentDirectory;
+        static string destinationDirectory;
+        static string sourceDirectory;
+        static string archiveDirectory;
+
+        public static void Main(string[] args)
         {
-            string input = $"{Environment.CurrentDirectory}\\Source_csv\\";
+            currentDirectory = Directory.GetCurrentDirectory();
+
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(currentDirectory)
+                .AddJsonFile("appsettings.json");
+
+            var config = builder.Build();
+
+            destinationDirectory = config.GetSection("destinationDirectory").Get<string>();
+            sourceDirectory = config.GetSection("sourceDirectory").Get<string>();
+            archiveDirectory = config.GetSection("archiveDirectory").Get<string>();
+
+            string input = $"{currentDirectory}\\{sourceDirectory}\\";
 
             DirectoryInfo dirInfo = new DirectoryInfo(input);
             FileInfo file = dirInfo.GetFiles("*.*")[0];
@@ -35,7 +53,7 @@ namespace HoneywellPOSReport
                 Console.WriteLine("File type must be CSV");
             }
 
-            string dest = $"{input}Archive\\";
+            string dest = $"{currentDirectory}\\{archiveDirectory}\\";
 
             if (!Directory.Exists(dest)) {
                 Directory.CreateDirectory(dest);
@@ -52,7 +70,7 @@ namespace HoneywellPOSReport
             Console.ReadKey();
         }
 
-        static void WriteExcelFile(List<CsvColumns> csvFiles)
+        private static void WriteExcelFile(List<CsvColumns> csvFiles)
         {
             List<ProductDetails> products = new List<ProductDetails>();
 
@@ -92,9 +110,10 @@ namespace HoneywellPOSReport
 
             Console.WriteLine($"\r\n{csvFiles.Count} rows mapped");
 
-            DataTable table = (DataTable)JsonConvert.DeserializeObject(JsonConvert.SerializeObject(products), (typeof(DataTable)));
+            string productsJSON = JsonConvert.SerializeObject(products);
+            DataTable table = (DataTable)JsonConvert.DeserializeObject(productsJSON, (typeof(DataTable)));
             string FileName = $"HI POS {Utilities.GetAbbreviatedFromFullName(DateTime.Now.ToString("MMMM"))} {DateTime.Now.Year}.xlsx";
-            string Output = $"{Environment.CurrentDirectory}\\Destination_xlsx\\{FileName}";
+            string Output = $"{currentDirectory}\\{destinationDirectory}\\{FileName}";
             XLWorkbook wb = new XLWorkbook();
             var ws = wb.Worksheets.Add(table, Constants.WorksheetName);
 
