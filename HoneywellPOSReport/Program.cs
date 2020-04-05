@@ -15,8 +15,6 @@ namespace HoneywellPOSReport
     {
         static void Main(string[] args)
         {
-            List<CsvColumns> csvFile = null;
-
             string input = $"{Environment.CurrentDirectory}\\Source_csv\\";
 
             DirectoryInfo dirInfo = new DirectoryInfo(input);
@@ -24,15 +22,12 @@ namespace HoneywellPOSReport
 
             if (file.Extension.Contains("csv", StringComparison.OrdinalIgnoreCase))
             {
-                using (var reader = new StreamReader(file.FullName))
-                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-                {
-                    csv.Configuration.RegisterClassMap<GTHMap>();
-                    csvFile = csv.GetRecords<CsvColumns>().Where(c => (c.State.ToUpper() == "CA" || c.State.ToUpper() == "NV") && c.ShipQty > 0).ToList();
+                using var reader = new StreamReader(file.FullName);
+                using CsvReader csv = new CsvReader(reader, CultureInfo.InvariantCulture);
+                csv.Configuration.RegisterClassMap<GTHMap>();
 
-                    csvFile.ForEach(c => c.Description = Utilities.CleanUpDescription(c.Description));
-                }
-
+                List<CsvColumns> csvFile = csv.GetRecords<CsvColumns>().Where(c => (c.State.ToUpper() == "CA" || c.State.ToUpper() == "NV") && c.ShipQty > 0).ToList();
+                csvFile.ForEach(c => c.Description = Utilities.CleanUpDescription(c.Description));
                 WriteExcelFile(csvFile);
             }
             else 
@@ -78,7 +73,7 @@ namespace HoneywellPOSReport
                         City = csvItem.City,
                         Country = "USA",
                         CustomerName = csvItem.CustomerName,
-                        DateSold = csvItem.ShipRecDate.Value.ToShortDateString(),
+                        DateSold = Convert.ToDateTime(csvItem.ShipRecDate.Value.ToShortDateString()),
                         DistributerRefNumber = 291375,
                         PartName = csvItem.Description,
                         QTY = csvItem.ShipQty,
@@ -105,7 +100,7 @@ namespace HoneywellPOSReport
 
             ws.Rows(1, 1).Height = 30;
             ws.SheetView.FreezeRows(1);
-    
+
             for (int i = 1; i < ws.Columns().ToArray().Length + 1; i++) 
             {
                 ws.Cell(1, i).Style.Fill.BackgroundColor = XLColor.PastelYellow;

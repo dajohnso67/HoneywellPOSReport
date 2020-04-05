@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 
 namespace HoneywellPOSReport
 {
@@ -24,7 +25,7 @@ namespace HoneywellPOSReport
         public string       Zip { get; set; }
 
         [JsonProperty(PropertyName = "DATE SOLD")]
-        public string       DateSold { get; set; }
+        public DateTime?       DateSold { get; set; }
 
         [JsonProperty(PropertyName = "SIC")]
         public string       Sic { get; set; }
