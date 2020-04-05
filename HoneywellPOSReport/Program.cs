@@ -36,36 +36,42 @@ namespace HoneywellPOSReport
             string input = $"{currentDirectory}\\{sourceDirectory}\\";
 
             DirectoryInfo dirInfo = new DirectoryInfo(input);
-            FileInfo file = dirInfo.GetFiles("*.*")[0];
+            FileInfo[] files = dirInfo.GetFiles("*.csv*");
+            FileInfo file = (files.Length > 0) ? files[0] : null;
 
-            if (file.Extension.Contains("csv", StringComparison.OrdinalIgnoreCase))
+            if (!Object.Equals(file, null))
             {
-                using var reader = new StreamReader(file.FullName);
-                using CsvReader csv = new CsvReader(reader, CultureInfo.InvariantCulture);
-                csv.Configuration.RegisterClassMap<GTHMap>();
+                using (var reader = new StreamReader(file.FullName)) {
 
-                List<CsvColumns> csvFile = csv.GetRecords<CsvColumns>().Where(c => (c.State.ToUpper() == "CA" || c.State.ToUpper() == "NV") && c.ShipQty > 0).ToList();
-                csvFile.ForEach(c => c.Description = Utilities.CleanUpDescription(c.Description));
-                WriteExcelFile(csvFile);
+                    using CsvReader csv = new CsvReader(reader, CultureInfo.InvariantCulture);
+                    csv.Configuration.RegisterClassMap<GTHMap>();
+
+                    List<CsvColumns> csvFile = csv.GetRecords<CsvColumns>().Where(c => (c.State.ToUpper() == "CA" || c.State.ToUpper() == "NV") && c.ShipQty > 0).ToList();
+                    csvFile.ForEach(c => c.Description = Utilities.CleanUpDescription(c.Description));
+                    WriteExcelFile(csvFile);
+                }
+
+                string dest = $"{currentDirectory}\\{archiveDirectory}\\";
+
+                if (!Directory.Exists(dest))
+                {
+                    Directory.CreateDirectory(dest);
+                }
+
+                string movedFile = $"{dest}{file.Name}";
+
+                if (File.Exists(movedFile))
+                {
+                    File.Delete(movedFile);
+                }
+
+                File.Move(file.FullName, movedFile);
+
             }
             else 
             {
-                Console.WriteLine("File type must be CSV");
+                Console.WriteLine($"Source CSV file does not exist in the {sourceDirectory} folder");
             }
-
-            string dest = $"{currentDirectory}\\{archiveDirectory}\\";
-
-            if (!Directory.Exists(dest)) {
-                Directory.CreateDirectory(dest);
-            }
-
-            string movedFile = $"{dest}{file.Name}";
-
-            if (File.Exists(movedFile)) {
-                File.Delete(movedFile);
-            }
-
-            File.Move(file.FullName, movedFile);
 
             Console.ReadKey();
         }
