@@ -41,8 +41,8 @@ namespace HoneywellPOSReport
 
             if (!Object.Equals(file, null))
             {
-                using (var reader = new StreamReader(file.FullName)) {
-
+                using (var reader = new StreamReader(file.FullName)) 
+                {
                     using CsvReader csv = new CsvReader(reader, CultureInfo.InvariantCulture);
                     csv.Configuration.RegisterClassMap<GTHMap>();
 
@@ -66,7 +66,6 @@ namespace HoneywellPOSReport
                 }
 
                 File.Move(file.FullName, movedFile);
-
             }
             else 
             {
@@ -115,6 +114,8 @@ namespace HoneywellPOSReport
             ct.PrintTable();
 
             Console.WriteLine($"\r\n{csvFiles.Count} rows mapped");
+
+            products = products.OrderByDescending(c => c.DateSold).ToList();
 
             string productsJSON = JsonConvert.SerializeObject(products);
             DataTable table = (DataTable)JsonConvert.DeserializeObject(productsJSON, (typeof(DataTable)));
