@@ -18,6 +18,7 @@ namespace HoneywellPOSReport
         static string destinationDirectory;
         static string sourceDirectory;
         static string archiveDirectory;
+        static int distributerRefNumber;
 
         //static string seedDataDirectory;
 
@@ -34,7 +35,7 @@ namespace HoneywellPOSReport
             destinationDirectory = config.GetSection("destinationDirectory").Get<string>();
             sourceDirectory = config.GetSection("sourceDirectory").Get<string>();
             archiveDirectory = config.GetSection("archiveDirectory").Get<string>();
-
+            distributerRefNumber = config.GetSection("distributerRefNumber").Get<int>();
 
             // use to insert seed data 
             //seedDataDirectory = config.GetSection("seedDataDirectory").Get<string>();
@@ -129,7 +130,7 @@ namespace HoneywellPOSReport
                         Country = "USA",
                         CustomerName = csvItem.CustomerName.Trim(),
                         DateSold = Convert.ToDateTime(csvItem.ShipRecDate.Value.ToShortDateString()),
-                        DistributerRefNumber = 291375,
+                        DistributerRefNumber = distributerRefNumber,
                         PartName = csvItem.Description,
                         QTY = csvItem.ShipQty,
                         Sic = Utilities.AddSicValue(csvItem.CustomerName.Trim()),
