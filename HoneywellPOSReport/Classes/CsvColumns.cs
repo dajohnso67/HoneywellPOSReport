@@ -29,4 +29,22 @@ namespace HoneywellPOSReport
             Map(m => m.PriceLine).Name("Price Line");
         }
     }
+
+
+
+
+    public class CsvColumns2
+    {
+        public string CustomerName { get; set; }
+        public string SIC { get; set; }
+    }
+
+    public class GTHMap2 : ClassMap<CsvColumns2>
+    {
+        public GTHMap2()
+        {
+            Map(m => m.CustomerName).Name("CUSTOMER NAME");
+            Map(m => m.SIC).Name("SIC");
+        }
+    }
 }

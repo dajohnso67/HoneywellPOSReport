@@ -19,6 +19,8 @@ namespace HoneywellPOSReport
         static string sourceDirectory;
         static string archiveDirectory;
 
+        //static string seedDataDirectory;
+
         public static void Main(string[] args)
         {
             currentDirectory = Directory.GetCurrentDirectory();
@@ -33,11 +35,41 @@ namespace HoneywellPOSReport
             sourceDirectory = config.GetSection("sourceDirectory").Get<string>();
             archiveDirectory = config.GetSection("archiveDirectory").Get<string>();
 
+
+            // use to insert seed data 
+            //seedDataDirectory = config.GetSection("seedDataDirectory").Get<string>();
+            //string input2 = $"{currentDirectory}\\{seedDataDirectory}\\";
+
+            //DirectoryInfo dirInfo2 = new DirectoryInfo(input2);
+            //FileInfo[] files2 = dirInfo2.GetFiles("*.csv*");
+
+            //foreach (FileInfo f in files2)
+            //{
+            //    using (var reader = new StreamReader(f.FullName))
+            //    {
+
+            //        using CsvReader csv = new CsvReader(reader, CultureInfo.InvariantCulture);
+            //        csv.Configuration.RegisterClassMap<GTHMap2>();
+
+            //        List<CsvColumns2> csvFile = csv.GetRecords<CsvColumns2>().ToList();
+
+            //        foreach (var item in csvFile)
+            //        {
+            //            if (!string.IsNullOrEmpty(item.CustomerName)) {
+            //                Utilities.InsertSicValue(item.CustomerName.Trim(), item.SIC.Trim());
+            //            }
+            //        }
+            //    }
+            //}
+
+            //return;
+
             string input = $"{currentDirectory}\\{sourceDirectory}\\";
 
             DirectoryInfo dirInfo = new DirectoryInfo(input);
             FileInfo[] files = dirInfo.GetFiles("*.csv*");
             FileInfo file = (files.Length > 0) ? files[0] : null;
+
 
             if (!Object.Equals(file, null))
             {
@@ -95,12 +127,12 @@ namespace HoneywellPOSReport
                     {
                         City = csvItem.City,
                         Country = "USA",
-                        CustomerName = csvItem.CustomerName,
+                        CustomerName = csvItem.CustomerName.Trim(),
                         DateSold = Convert.ToDateTime(csvItem.ShipRecDate.Value.ToShortDateString()),
                         DistributerRefNumber = 291375,
                         PartName = csvItem.Description,
                         QTY = csvItem.ShipQty,
-                        Sic = Utilities.AddSicValue(csvItem.CustomerName),
+                        Sic = Utilities.AddSicValue(csvItem.CustomerName.Trim()),
                         State = csvItem.State,
                         Zip = csvItem.ZipCode,
 

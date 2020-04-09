@@ -28,16 +28,9 @@ namespace HoneywellPOSReport
         /// <returns></returns>
         public static string GetAbbreviatedFromFullName(string fullname)
         {
-            List<string> names = DateTimeFormatInfo.CurrentInfo.MonthNames.ToList();
-
-            foreach (var item in names)
-            {
-                if (item == fullname)
-                {
-                    return DateTime.ParseExact(item, "MMMM", CultureInfo.CurrentCulture).ToString("MMM").ToUpper();
-                }
-            }
-            return string.Empty;
+            return DateTime.ParseExact(fullname, "MMMM", CultureInfo.CurrentCulture)
+               .ToString("MMM")
+               .ToUpper();
         }
 
         /// <summary>
@@ -47,12 +40,6 @@ namespace HoneywellPOSReport
         /// <returns></returns>
         public static string AddSicValue(string customerName)
         {
-
-            //using (StreamReader r = new StreamReader(@"C:\HoneywellPOSReport\HoneywellPOSReport\HoneywellPOSReport\CustomerSIC.json"))
-            //{
-            //string json = r.ReadToEnd();
-            //List<CustomerSic> items = JsonConvert.DeserializeObject<List<CustomerSic>>(json);
-
             string dataFile = $"{Environment.CurrentDirectory}\\Data\\{Constants.DatabaseName}";
 
             using (var db = new LiteDatabase(dataFile))
@@ -60,13 +47,13 @@ namespace HoneywellPOSReport
                 var col = db.GetCollection<CustomerSic>(Constants.Tables.CustomerSicCodes);
 
                 var results = col.Query()
-                    .Where(x => x.CustomerName.ToUpper() == customerName.ToUpper())
+                    .Where(x => x.CustomerName.Trim().ToUpper() == customerName.Trim().ToUpper())
                     .Select(x => new { x.CustomerName, x.SIC })
                     .SingleOrDefault();
 
                 if (!Equals(results, null))
                 {
-                    return results.SIC;
+                    return results.SIC.Trim();
                 }
                 else
                 {
@@ -77,19 +64,52 @@ namespace HoneywellPOSReport
 
                         new CustomerSic
                         {
-                            CustomerName = customerName,
-                            SIC = sicValue
+                            CustomerName = customerName.Trim(),
+                            SIC = sicValue.Trim()
                         }
                     );
                     return sicValue;
                 }
 
             }
-
-            //}
-
         }
 
+        public static void InsertSicValue(string customerName, string sic)
+        {
+            string dataFile = $"{Environment.CurrentDirectory}\\Data\\{Constants.DatabaseName}";
 
+            using (var db = new LiteDatabase(dataFile))
+            {
+                var col = db.GetCollection<CustomerSic>(Constants.Tables.CustomerSicCodes);
+
+                //var results = col.Query().ToList();
+
+                //var query = col.Query().ToList()
+                //    .GroupBy(x => x.CustomerName)
+                //  .Where(g => g.Count() > 1)
+                //  .Select(y => y.First())
+                //  .ToList();
+
+                var results = col.Query()
+                    .Where(x => x.CustomerName.Trim().ToUpper() == customerName.Trim().ToUpper())
+                    .Select(x => new { x.CustomerName, x.SIC }).ToList();
+
+                if (results.Count() > 1)
+                {
+                    Console.WriteLine(customerName);
+                }
+
+                if (results.Count() == 0)
+                {
+                    col.Insert(
+                       new CustomerSic
+                       {
+                           CustomerName = customerName.Trim(),
+                           SIC = sic.Trim()
+                       }
+                   );
+                }
+            }
+        }
     }
 }
