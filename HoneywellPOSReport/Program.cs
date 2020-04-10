@@ -20,6 +20,8 @@ namespace HoneywellPOSReport
         static string archiveDirectory;
         static int distributerRefNumber;
 
+        static string fileMonth;
+
         //static string seedDataDirectory;
 
         public static void Main(string[] args)
@@ -69,42 +71,67 @@ namespace HoneywellPOSReport
 
             DirectoryInfo dirInfo = new DirectoryInfo(input);
             FileInfo[] files = dirInfo.GetFiles("*.csv*");
-            FileInfo file = (files.Length > 0) ? files[0] : null;
 
-
-            if (!Object.Equals(file, null))
+            if (files.Length > 0)
             {
-                using (var reader = new StreamReader(file.FullName)) 
+                foreach (var file in files)
                 {
-                    using CsvReader csv = new CsvReader(reader, CultureInfo.InvariantCulture);
-                    csv.Configuration.RegisterClassMap<GTHMap>();
 
-                    List<CsvColumns> csvFile = csv.GetRecords<CsvColumns>().Where(c => (c.State.ToUpper() == "CA" || c.State.ToUpper() == "NV") && c.ShipQty > 0).ToList();
-                    csvFile.ForEach(c => c.Description = Utilities.CleanUpDescription(c.Description));
-                    WriteExcelFile(csvFile);
+                    if (!Object.Equals(file, null))
+                    {
+                        string splMth = file.Name.Split(".")[0];
+                        fileMonth = CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(Convert.ToInt32(splMth.Substring(splMth.Length - 2).Trim())).ToUpper();
+
+                        using (var reader = new StreamReader(file.FullName))
+                        {
+                            using CsvReader csv = new CsvReader(reader, CultureInfo.InvariantCulture);
+                            csv.Configuration.IgnoreBlankLines = true;
+                            csv.Configuration.IgnoreQuotes = true;
+                            csv.Configuration.BadDataFound = x =>
+                            {
+                                x.Record = null;
+                            };
+
+                            csv.Configuration.RegisterClassMap<GTHMap>();
+
+                            List<CsvColumns> csvFile = csv.GetRecords<CsvColumns>().Where(c => (c.State.ToUpper() == "CA" || c.State.ToUpper() == "NV") && c.ShipQty > 0).ToList();
+                            csvFile.ForEach(c => c.Description = Utilities.CleanUpDescription(c.Description));
+                            WriteExcelFile(csvFile);
+                        }
+
+                        string dest = $"{currentDirectory}\\{archiveDirectory}\\";
+
+                        if (!Directory.Exists(dest))
+                        {
+                            Directory.CreateDirectory(dest);
+                        }
+
+                        string movedFile = $"{dest}{file.Name}";
+
+                        if (File.Exists(movedFile))
+                        {
+                            File.Delete(movedFile);
+                        }
+
+                        File.Move(file.FullName, movedFile);
+
+                        Console.WriteLine($"\r\nDONE PROCESSING [{file.Name}]\r\n");
+
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Source CSV file does not exist in the [{sourceDirectory}] folder");
+                    }
+
                 }
-
-                string dest = $"{currentDirectory}\\{archiveDirectory}\\";
-
-                if (!Directory.Exists(dest))
-                {
-                    Directory.CreateDirectory(dest);
-                }
-
-                string movedFile = $"{dest}{file.Name}";
-
-                if (File.Exists(movedFile))
-                {
-                    File.Delete(movedFile);
-                }
-
-                File.Move(file.FullName, movedFile);
             }
-            else 
-            {
-                Console.WriteLine($"Source CSV file does not exist in the {sourceDirectory} folder");
+            else {
+
+                Console.WriteLine($"The [{sourceDirectory}] directory does not contain any .CSV data files");
             }
 
+            
+            
             Console.ReadKey();
         }
 
@@ -152,7 +179,7 @@ namespace HoneywellPOSReport
 
             string productsJSON = JsonConvert.SerializeObject(products);
             DataTable table = (DataTable)JsonConvert.DeserializeObject(productsJSON, (typeof(DataTable)));
-            string FileName = $"HI POS {Utilities.GetAbbreviatedFromFullName(DateTime.Now.ToString("MMMM"))} {DateTime.Now.Year}.xlsx";
+            string FileName = $"HI POS {fileMonth} {DateTime.Now.Year}.xlsx";
             string Output = $"{currentDirectory}\\{destinationDirectory}\\{FileName}";
             XLWorkbook wb = new XLWorkbook();
             var ws = wb.Worksheets.Add(table, Constants.WorksheetName);
